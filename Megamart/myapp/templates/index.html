@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>home page</title>
+    {% load static %}
 </head>
 <nav>
     <a href="/">Home</a> |
@@ -13,6 +14,12 @@
 </nav>
 <body>
    <h1>wellcome to Megamart</h1>
+    <p>Megamart is your one-stop shop for all your grocery needs. We offer a wide variety of products at competitive prices.</p>
+   <h2>Featured Products</h2>
+   <img src="{% static 'image/products/rims.png' %}" alt="">
+       <img src="{% static 'image/products/oil.png' %}" alt="">
+        <img src="{% static 'image/products/tyres.png' %}" alt="">
+
     
 
     
