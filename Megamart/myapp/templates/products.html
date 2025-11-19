@@ -4,11 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Products - page</title>
-
+{% load static %}
 </head>
+<nav>
+    <a href="/">Home</a> |
+    <a href="/about/">About</a> |
+    <a href="/contact/">Contact</a>
+    <a href="/products/">view products</a>
+</nav>
 <body>
     <h1>Products inventory</h1>
-    <p>Welcome to Megamart’s Product Showcase. Here, you’ll find detailed information about the items you love—from specifications and features to customer reviews and pricing. We aim to help you make informed decisions by giving you clear, accurate, and up-to-date details on every product.</p>
+    <p>Welcome to Megamart’s Product Showcase. Here, 
+        you’ll find detailed information about the items you love—from specifications and features to customer reviews and pricing. We aim to help you make informed decisions by giving you clear, 
+        accurate, and up-to-date details on every product.</p>
+
+
+        <h2>car products</h2>
+        <img src="{% static 'image/products/oil.png' %}" alt="">
+
+
     
 </body>
 </html>
