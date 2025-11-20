@@ -3,34 +3,594 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Products - page</title>
-{% load static %}
+    <title>Products - MegaMart</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    {% load static %}
+    <style>
+        :root {
+            --primary-color: #2c5aa0;
+            --secondary-color: #f8f9fa;
+            --accent-color: #ff6b35;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7fa;
+        }
+        
+        .navbar {
+            background-color: var(--primary-color) !important;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+        
+        .nav-link {
+            color: white !important;
+            font-weight: 500;
+            margin: 0 5px;
+            transition: all 0.3s;
+        }
+        
+        .nav-link:hover {
+            color: var(--accent-color) !important;
+        }
+        
+        .page-header {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                        url('https://images.unsplash.com/photo-1607082350899-7e105aa886ae?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+        }
+        
+        .section-title {
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80px;
+            height: 3px;
+            background-color: var(--accent-color);
+        }
+        
+        .category-section {
+            padding: 80px 0;
+        }
+        
+        .category-header {
+            margin-bottom: 50px;
+        }
+        
+        .product-card {
+            border: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s;
+            margin-bottom: 30px;
+            height: 100%;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .product-image {
+            height: 200px;
+            object-fit: contain;
+            padding: 20px;
+        }
+        
+        .product-price {
+            color: var(--accent-color);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .product-rating {
+            color: #ffc107;
+        }
+        
+        .badge-sale {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+        
+        .filters-section {
+            background-color: var(--secondary-color);
+            padding: 30px 0;
+        }
+        
+        .filter-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+        
+        .benefits-section {
+            background-color: var(--secondary-color);
+            padding: 80px 0;
+        }
+        
+        .benefit-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+        
+        footer {
+            background-color: #1a2c4e;
+            color: white;
+            padding: 40px 0 20px;
+        }
+        
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 10px;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
+        
+        .social-icons a {
+            color: white;
+            font-size: 1.2rem;
+            margin-right: 15px;
+            transition: color 0.3s;
+        }
+        
+        .social-icons a:hover {
+            color: var(--accent-color);
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .btn-primary:hover {
+            background-color: #1e3d72;
+            border-color: #1e3d72;
+        }
+        
+        .btn-accent {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+            color: white;
+        }
+        
+        .btn-accent:hover {
+            background-color: #e05a2b;
+            border-color: #e05a2b;
+            color: white;
+        }
+        
+        .btn-outline-primary {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+        
+        .btn-outline-primary:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+    </style>
 </head>
-<nav>
-    <a href="/">Home</a> |
-    <a href="/about/">About</a> |
-    <a href="/contact/">Contact</a> |
-    <a href="/products/">view products</a>
-</nav>
 <body>
-    <h1>Products inventory</h1>
-    <p>Welcome to Megamart’s Product Showcase. Here, 
-        you’ll find detailed information about the items you love—from specifications and features to customer reviews and pricing. We aim to help you make informed decisions by giving you clear, 
-        accurate, and up-to-date details on every product.</p>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-shopping-bag me-2"></i>MegaMart
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'about' %}">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{% url 'products' %}">View Products</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1 class="display-4 fw-bold">MegaMart Products</h1>
+            <p class="lead">Discover our wide range of quality products at unbeatable prices</p>
+        </div>
+    </section>
 
-        <h2>car products</h2>
-        <h3>Car Oil</h3>
-        <img src="{% static 'image/products/oil.png' %}" alt="">
+    <!-- Introduction Section -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-10 text-center">
+                    <h2 class="section-title">Product Showcase</h2>
+                    <p class="mb-4">Welcome to MegaMart's Product Showcase. Here, you'll find detailed information about the items you love—from specifications and features to customer reviews and pricing. We aim to help you make informed decisions by giving you clear, accurate, and up-to-date details on every product.</p>
+                    <div class="row mt-5">
+                        <div class="col-md-4 mb-4">
+                            <div class="d-flex align-items-center justify-content-center">
+                                <i class="fas fa-info-circle fa-2x text-primary me-3"></i>
+                                <h5 class="mb-0">Detailed Specifications</h5>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-4">
+                            <div class="d-flex align-items-center justify-content-center">
+                                <i class="fas fa-star fa-2x text-primary me-3"></i>
+                                <h5 class="mb-0">Customer Reviews</h5>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-4">
+                            <div class="d-flex align-items-center justify-content-center">
+                                <i class="fas fa-tag fa-2x text-primary me-3"></i>
+                                <h5 class="mb-0">Competitive Pricing</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-        <h3>Car Tyres</h3>
-        <img src="{% static 'image/products/tyres.png' %}" alt="">
+    <!-- Filters Section -->
+    <section class="filters-section">
+        <div class="container">
+            <div class="filter-card">
+                <h4 class="mb-4">Filter Products</h4>
+                <div class="row">
+                    <div class="col-md-3 mb-3">
+                        <label for="category" class="form-label">Category</label>
+                        <select class="form-select" id="category">
+                            <option selected>All Categories</option>
+                            <option>Car Products</option>
+                            <option>Home & Garden</option>
+                            <option>Electronics</option>
+                            <option>Sports & Outdoors</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label for="price" class="form-label">Price Range</label>
+                        <select class="form-select" id="price">
+                            <option selected>All Prices</option>
+                            <option>Under $50</option>
+                            <option>$50 - $100</option>
+                            <option>$100 - $200</option>
+                            <option>Over $200</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label for="brand" class="form-label">Brand</label>
+                        <select class="form-select" id="brand">
+                            <option selected>All Brands</option>
+                            <option>MegaBrand</option>
+                            <option>AutoPro</option>
+                            <option>DriveSafe</option>
+                            <option>EcoWheels</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 mb-3 d-flex align-items-end">
+                        <button class="btn btn-primary w-100">Apply Filters</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-        <h3>Car Rims</h3>
-        <img src="{% static 'image/products/rims.png' %}" alt="">
+    <!-- Car Products Section -->
+    <section class="category-section">
+        <div class="container">
+            <div class="category-header">
+                <h2 class="section-title">Car Products</h2>
+                <p class="lead">High-quality automotive products to keep your vehicle running smoothly</p>
+            </div>
+            
+            <div class="row">
+                <!-- Car Oil Product -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="card product-card">
+                        <span class="badge-sale">Best Seller</span>
+                        <img src="https://images.unsplash.com/photo-1621905252507-b35492cc74b4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" class="card-img-top product-image" alt="Car Oil">
+                        <div class="card-body">
+                            <h5 class="card-title">Premium Synthetic Motor Oil</h5>
+                            <p class="card-text">Advanced full synthetic formula for maximum engine protection and performance in all weather conditions.</p>
+                            <div class="product-rating mb-2">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                <span class="text-muted ms-1">(128 reviews)</span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="product-price">$24.99</span>
+                                <button class="btn btn-primary">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Car Tyres Product -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="card product-card">
+                        <span class="badge-sale">Sale</span>
+                        <img src="https://images.unsplash.com/photo-1554744516-2a0e6b4e99a7?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" class="card-img-top product-image" alt="Car Tyres">
+                        <div class="card-body">
+                            <h5 class="card-title">All-Season Performance Tyres</h5>
+                            <p class="card-text">Durable tyres designed for optimal performance in all weather conditions with enhanced traction and longevity.</p>
+                            <div class="product-rating mb-2">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <span class="text-muted ms-1">(94 reviews)</span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="product-price">$89.99 <small class="text-muted text-decoration-line-through">$109.99</small></span>
+                                <button class="btn btn-primary">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Car Rims Product -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="card product-card">
+                        <img src="https://images.unsplash.com/photo-1555212697-194d092e3b8f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" class="card-img-top product-image" alt="Car Rims">
+                        <div class="card-body">
+                            <h5 class="card-title">Premium Alloy Car Rims</h5>
+                            <p class="card-text">High-quality alloy rims for enhanced vehicle performance, style, and durability. Available in multiple sizes.</p>
+                            <div class="product-rating mb-2">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <span class="text-muted ms-1">(67 reviews)</span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="product-price">$149.99</span>
+                                <button class="btn btn-primary">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Additional Car Products -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="card product-card">
+                        <img src="https://images.unsplash.com/photo-1603712610496-5362a2e6b20b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" class="card-img-top product-image" alt="Car Battery">
+                        <div class="card-body">
+                            <h5 class="card-title">Heavy-Duty Car Battery</h5>
+                            <p class="card-text">Reliable power source with enhanced cranking power for all vehicle types and weather conditions.</p>
+                            <div class="product-rating mb-2">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                <span class="text-muted ms-1">(52 reviews)</span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="product-price">$129.99</span>
+                                <button class="btn btn-primary">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6">
+                    <div class="card product-card">
+                        <img src="https://images.unsplash.com/photo-1621905251180-4b7c97fa5c5a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" class="card-img-top product-image" alt="Brake Pads">
+                        <div class="card-body">
+                            <h5 class="card-title">Ceramic Brake Pads</h5>
+                            <p class="card-text">Premium ceramic brake pads for superior stopping power, reduced noise, and less brake dust.</p>
+                            <div class="product-rating mb-2">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <span class="text-muted ms-1">(41 reviews)</span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="product-price">$45.99</span>
+                                <button class="btn btn-primary">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6">
+                    <div class="card product-card">
+                        <span class="badge-sale">New</span>
+                        <img src="https://images.unsplash.com/photo-1563720223485-8d84f13a30d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" class="card-img-top product-image" alt="Car Wax">
+                        <div class="card-body">
+                            <h5 class="card-title">Premium Car Wax & Polish</h5>
+                            <p class="card-text">Advanced formula that provides long-lasting protection and a brilliant shine for your vehicle's finish.</p>
+                            <div class="product-rating mb-2">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                <i class="far fa-star"></i>
+                                <span class="text-muted ms-1">(28 reviews)</span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="product-price">$19.99</span>
+                                <button class="btn btn-primary">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-5">
+                <a href="#" class="btn btn-accent btn-lg">View All Car Products</a>
+            </div>
+        </div>
+    </section>
 
+    <!-- Other Categories Section -->
+    <section class="category-section bg-light">
+        <div class="container">
+            <div class="category-header">
+                <h2 class="section-title">Other Categories</h2>
+                <p class="lead">Explore our wide range of products across different categories</p>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="card product-card">
+                        <img src="https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" class="card-img-top product-image" alt="Home & Garden">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Home & Garden</h5>
+                            <p class="card-text">Everything you need for your home and outdoor spaces.</p>
+                            <a href="#" class="btn btn-outline-primary">Browse Category</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 mb-4">
+                    <div class="card product-card">
+                        <img src="https://images.unsplash.com/photo-1498049794561-7780e7231661?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" class="card-img-top product-image" alt="Electronics">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Electronics</h5>
+                            <p class="card-text">Latest gadgets, devices, and accessories for tech enthusiasts.</p>
+                            <a href="#" class="btn btn-outline-primary">Browse Category</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 mb-4">
+                    <div class="card product-card">
+                        <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" class="card-img-top product-image" alt="Sports & Outdoors">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Sports & Outdoors</h5>
+                            <p class="card-text">Gear and equipment for your active lifestyle and adventures.</p>
+                            <a href="#" class="btn btn-outline-primary">Browse Category</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
+    <!-- Benefits Section -->
+    <section class="benefits-section">
+        <div class="container">
+            <h2 class="section-title text-center">Why Shop With MegaMart</h2>
+            <div class="row text-center">
+                <div class="col-md-4 mb-4">
+                    <div class="benefit-icon">
+                        <i class="fas fa-shipping-fast"></i>
+                    </div>
+                    <h4>Free Shipping</h4>
+                    <p>Free delivery on orders over $50. Fast and reliable shipping to your doorstep.</p>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="benefit-icon">
+                        <i class="fas fa-undo-alt"></i>
+                    </div>
+                    <h4>Easy Returns</h4>
+                    <p>30-day return policy. No questions asked returns for most items.</p>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="benefit-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h4>Secure Shopping</h4>
+                    <p>Your data and transactions are protected with advanced security measures.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h4><i class="fas fa-shopping-bag me-2"></i>MegaMart</h4>
+                    <p>Your trusted partner for quality products and exceptional shopping experience.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5>Quick Links</h5>
+                    <div class="footer-links">
+                        <a href="/">Home</a>
+                        <a href="{% url 'about' %}">About</a>
+                        <a href="{% url 'contact' %}">Contact</a>
+                        <a href="{% url 'products' %}">Products</a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5>Customer Service</h5>
+                    <div class="footer-links">
+                        <a href="#">Shipping Policy</a>
+                        <a href="#">Return Policy</a>
+                        <a href="#">FAQ</a>
+                        <a href="#">Support Center</a>
+                    </div>
+                </div>
+                <div class="col-lg-3 mb-4">
+                    <h5>Contact Info</h5>
+                    <p><i class="fas fa-map-marker-alt me-2"></i> 123 Commerce St, City, State 12345</p>
+                    <p><i class="fas fa-phone me-2"></i> (123) 456-7890</p>
+                    <p><i class="fas fa-envelope me-2"></i> info@megamart.com</p>
+                </div>
+            </div>
+            <hr class="mt-4">
+            <div class="text-center py-3">
+                <p class="mb-0">&copy; 2023 MegaMart. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -5,9 +5,9 @@ from myapp import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.index),
-     path('about/', views.about),
-     path('products/', views.products),
-     path('contact/', views.contact),
+    path('', views.index , name='home'),
+     path('about/', views.about, name='about'),
+     path('products/', views.products, name='products'),
+     path('contact/', views.contact, name='contact'),
    
 ]
